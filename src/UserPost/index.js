@@ -1,12 +1,18 @@
 import React, { useState } from "react";
 import LoadingCard from "./LoadingCard";
+import { useSelector,useDispatch } from "react-redux";
+import { getPost,deletePost } from "../redux/features/postSlice";
 
 import { Button, Card, Input, Space } from "antd";
 
 const UserPost = ({ history }) => {
+
+  const dispatch=useDispatch();
+
   const [id, setId] = useState();
   const [bodyText, setBodyText] = useState("");
-
+  const {loading,post,edit} =useSelector((state)=>({...state.app}))
+  console.log(post,"this is posts");
   const onChangeInput = (e) => {
     setId(e.target.value);
   };
@@ -16,7 +22,7 @@ const UserPost = ({ history }) => {
     if (!id) {
       window.alert("Please enter id");
     } else {
-      // dispatch(loadUserPostStart({ id }));
+      dispatch(getPost({id}))
       setId("");
     }
   };
@@ -43,14 +49,14 @@ const UserPost = ({ history }) => {
       </Space>
       <br />
       <br />
-      {/* {loading ? (
+      {loading ? (
         <LoadingCard count={1} />
       ) : (
         <>
-          {posts.length > 0 && (
+          {post?.length>0 &&(
             <div className="site-card-border-less-wrapper">
-              <Card type="inner" title={posts[0].title}>
-                <p>User Id: {posts[0].id}</p>
+              <Card type="inner" title={post[0].title}>
+                <p>User Id: {post[0].id}</p>
                 {edit ? (
                   <>
                     <Input.TextArea
@@ -70,7 +76,7 @@ const UserPost = ({ history }) => {
                     </Space>
                   </>
                 ) : (
-                  <span>{posts[0].body}</span>
+                  <span>{post[0].body}</span>
                 )}
               </Card>
               <Space
@@ -86,6 +92,8 @@ const UserPost = ({ history }) => {
                   type="primary"
                   disabled={edit}
                   danger
+                  // onClick={()=>dispatch(deletePost{id:post(1).id})}
+                  onClick={()=>dispatch(deletePost({id:post[0].id}))}
                 >
                   Delete
                 </Button>
@@ -95,7 +103,7 @@ const UserPost = ({ history }) => {
             </div>
           )}
         </>
-      )} */}
+      )}
     </div>
   );
 };
