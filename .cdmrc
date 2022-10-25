@@ -1,5 +1,4 @@
 terminal-one: yarn && yarn start
-terminal-two: yarn && yarn server
-terminal-three: echo "we're ready"
+terminal-two: echo "we're ready"
 live-reload-browser: false
 tabs: ['README.md']
