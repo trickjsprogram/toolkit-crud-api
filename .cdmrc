@@ -1,4 +1,4 @@
-terminal-one: yarn && yarn start
+terminal-one: npm install && npm start
 terminal-two: echo "we're ready"
 live-reload-browser: false
 tabs: ['README.md']
